@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My Music</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="My Music">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <main class="library">
+    <header>
+      <div class="title-row">
+        <h1>My Music</h1>
+        <button id="infoBtn" class="icon-btn" data-ic="info" aria-label="사용 안내와 제한사항"></button>
+      </div>
+      <p id="netStatus" class="net"></p>
+      <div id="hint" class="hint" hidden></div>
+      <label class="search">
+        <span data-ic="search"></span>
+        <input id="search" type="search" placeholder="음악 검색" autocomplete="off" autocapitalize="off" enterkeyhint="search">
+      </label>
+      <div class="tabs" id="tabs">
+        <button data-tab="songs" class="on">음악</button>
+        <button data-tab="lists">플레이리스트</button>
+      </div>
+    </header>
+
+    <section id="recentSec" hidden>
+      <h2>최근 재생</h2>
+      <div id="recent" class="recent"></div>
+    </section>
+
+    <section>
+      <div id="plHead" class="plhead" hidden></div>
+      <div class="list-head">
+        <h2 id="listTitle">내 음악</h2>
+        <button id="sortBtn" class="link-btn">최근 추가</button>
+      </div>
+      <ul id="list" class="list"></ul>
+      <div id="empty" class="empty" hidden></div>
+    </section>
+  </main>
+
+  <aside id="player" class="player idle" aria-label="플레이어">
+    <div class="p-top">
+      <button id="closePlayer" class="icon-btn" data-ic="down" aria-label="플레이어 닫기"></button>
+      <button id="queueBtn" class="icon-btn" data-ic="queue" aria-label="대기열"></button>
+    </div>
+    <div class="p-body">
+      <div class="art-wrap"><img id="pArt" class="art" alt="앨범 이미지"></div>
+      <div class="p-meta">
+        <div><h2 id="pTitle">재생 중인 곡 없음</h2><p id="pArtist"></p></div>
+        <button id="pMore" class="icon-btn" data-ic="more" aria-label="더보기"></button>
+      </div>
+      <div class="seek">
+        <input id="seek" type="range" min="0" max="1000" value="0" aria-label="재생 위치">
+        <div class="times"><span id="tCur">0:00</span><span id="tDur">0:00</span></div>
+      </div>
+      <div class="controls">
+        <button id="bBack" class="sm" data-ic="back15" aria-label="15초 뒤로"></button>
+        <button id="bPrev" data-ic="prev" aria-label="이전 곡"></button>
+        <button id="bPlay" class="big" data-ic="play" aria-label="재생"></button>
+        <button id="bNext" data-ic="next" aria-label="다음 곡"></button>
+        <button id="bFwd" class="sm" data-ic="fwd15" aria-label="15초 앞으로"></button>
+      </div>
+      <div class="extras">
+        <button id="bShuffle" data-ic="shuffle" aria-label="셔플"></button>
+        <div class="vol" id="volWrap">
+          <span data-ic="vol"></span>
+          <input id="vol" type="range" min="0" max="100" value="100" aria-label="볼륨">
+          <small id="volNote" hidden>볼륨은 기기의 볼륨 버튼으로 조절해요</small>
+        </div>
+        <button id="bRepeat" data-ic="repeat" aria-label="반복 없음"></button>
+      </div>
+    </div>
+  </aside>
+
+  <div id="mini" class="mini" hidden>
+    <div id="miniOpen" class="mini-main" role="button" tabindex="0" aria-label="전체 플레이어 열기">
+      <img id="mArt" alt="">
+      <div class="meta"><b id="mTitle"></b><span id="mArtist"></span></div>
+    </div>
+    <button id="mPrev" class="icon-btn" data-ic="prev" aria-label="이전 곡"></button>
+    <button id="mPlay" class="icon-btn" data-ic="play" aria-label="재생"></button>
+    <button id="mNext" class="icon-btn" data-ic="next" aria-label="다음 곡"></button>
+    <div class="mini-prog"><i id="mProg"></i></div>
+  </div>
+
+  <button id="fab" class="fab" data-ic="plus" aria-label="음악 추가"></button>
+</div>
+
+<div id="sheetRoot"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- 핵심 재생 엔진: HTML5 audio (iOS 백그라운드/잠금화면 재생은 이 요소를 통해서만 가능) -->
+<audio id="audio" preload="auto" playsinline></audio>
+<input id="fileIn" type="file" multiple hidden accept="audio/*,.mp3,.m4a,.aac,.wav,.ogg,.oga,.opus,.flac,.aif,.aiff,.caf">
+<input id="imgIn" type="file" accept="image/*" hidden>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
